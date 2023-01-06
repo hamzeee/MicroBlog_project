@@ -1,11 +1,15 @@
 from pymongo import MongoClient
 from flask import Flask,render_template,request
+from dotenv import load_dotenv 
 import datetime
+import os
+
+load_dotenv()
 
 def create_app(): 
     # app created to prevent multiple instances of db client
     app = Flask(__name__)
-    client = MongoClient("mongodb+srv://hrazah:Justrun_1@journal.ei45az8.mongodb.net/test")
+    client = MongoClient(os.environ.get("MONGODB_URI"))
     app.db = client.Journal
 
     @app.route("/", methods=["GET" , "POST"])
